@@ -16,7 +16,7 @@ public class FeedBackDisplay extends JFrame {
         // --- CONFIGURAÇÕES DA JANELA DESKTOP TELA CHEIA ---
         setTitle("Enviar Feedback");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setResizable(true);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 

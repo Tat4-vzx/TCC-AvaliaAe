@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CadastroDAO {
+    public CadastroDAO() {
+    }
+
     public static void salvarCadastro(String nome, String email, String senha) {
         String sql = "INSERT INTO login (nome, email, senha) VALUES (?, ?, ?)";
 
@@ -32,4 +35,5 @@ public class CadastroDAO {
             erro.printStackTrace();
         } // O 'conexao' fecha automaticamente bem aqui
     }
+
 }

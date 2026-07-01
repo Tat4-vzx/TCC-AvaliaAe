@@ -122,6 +122,24 @@ public class ExibirFeedBackDisplay extends JFrame {
             modeloTabela.addRow(linha);
         }
 
+        // --- EVENTO DE CLIQUE DUPLO NA TABELA ---
+        tabelaFeedbacks.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Verifica se foi um clique duplo
+                if (e.getClickCount() == 2) {
+                    int linhaSelecionada = tabelaFeedbacks.getSelectedRow();
+                    if (linhaSelecionada != -1) {
+                        String nome = (String) tabelaFeedbacks.getValueAt(linhaSelecionada, 0);
+                        String mensagem = (String) tabelaFeedbacks.getValueAt(linhaSelecionada, 1);
+
+                        // Chama o método para exibir em tela expandida
+                        abrirFeedbackTelaCheia(nome, mensagem);
+                    }
+                }
+            }
+        });
+
         JScrollPane scrollPane = new JScrollPane(tabelaFeedbacks);
         scrollPane.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
         scrollPane.getViewport().setBackground(Color.WHITE); // Fundo interno branco
@@ -155,6 +173,63 @@ public class ExibirFeedBackDisplay extends JFrame {
 
         painelPrincipal.add(centralizador, BorderLayout.CENTER);
         add(painelPrincipal);
+    }
+
+    // --- MÉTODO PARA EXIBIR FEEDBACK EXPANDIDO ---
+    private void abrirFeedbackTelaCheia(String nome, String mensagem) {
+        // Cria um JDialog modal (trava a tela de trás enquanto estiver aberto)
+        JDialog modal = new JDialog(this, "Visualização de Feedback", true);
+
+        // Define para ocupar toda a área de trabalho
+        Rectangle limitesTela = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        modal.setBounds(limitesTela);
+        modal.setLocationRelativeTo(this);
+        modal.setLayout(new BorderLayout());
+
+        Color corFundo = new Color(248, 249, 250);
+
+        // Painel principal do modal
+        JPanel painelConteudo = new JPanel(new BorderLayout(20, 20));
+        painelConteudo.setBackground(corFundo);
+        painelConteudo.setBorder(new EmptyBorder(50, 60, 50, 60));
+
+        // Cabeçalho do modal
+        JLabel lblTitulo = new JLabel("Feedback de: " + nome);
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        lblTitulo.setForeground(new Color(33, 37, 41));
+        lblTitulo.setBorder(new EmptyBorder(0, 0, 20, 0));
+        painelConteudo.add(lblTitulo, BorderLayout.NORTH);
+
+        // Área de texto para a mensagem (com quebra de linha automática)
+        JTextArea txtMensagem = new JTextArea(mensagem);
+        txtMensagem.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+        txtMensagem.setForeground(new Color(73, 80, 87));
+        txtMensagem.setLineWrap(true);
+        txtMensagem.setWrapStyleWord(true);
+        txtMensagem.setEditable(false); // Impede que o usuário digite
+        txtMensagem.setMargin(new Insets(20, 20, 20, 20)); // Padding interno
+
+        // Scroll caso o texto seja gigante
+        JScrollPane scrollMensagem = new JScrollPane(txtMensagem);
+        scrollMensagem.setBorder(new LineBorder(new Color(222, 226, 230), 1, true));
+        painelConteudo.add(scrollMensagem, BorderLayout.CENTER);
+
+        // Botão para fechar
+        JPanel painelRodape = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelRodape.setBackground(corFundo);
+
+        BotaoModerno btnFechar = new BotaoModerno("Fechar", new Color(67, 97, 238), new Color(72, 149, 239));
+        btnFechar.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnFechar.setForeground(Color.WHITE);
+        btnFechar.setPreferredSize(new Dimension(150, 45));
+        btnFechar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnFechar.addActionListener(e -> modal.dispose());
+
+        painelRodape.add(btnFechar);
+        painelConteudo.add(painelRodape, BorderLayout.SOUTH);
+
+        modal.add(painelConteudo);
+        modal.setVisible(true); // Exibe o modal na tela
     }
 
     /**

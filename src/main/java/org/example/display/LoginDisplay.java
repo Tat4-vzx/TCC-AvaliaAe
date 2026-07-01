@@ -12,7 +12,7 @@ public class LoginDisplay extends JFrame{
     public LoginDisplay (){
 
 // --- CONFIGURAÇÕES DA JANELA DESKTOP TELA CHEIA ---
-        setTitle("Login");
+        setTitle("Identificação");
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre em tela cheia automaticamente
         setResizable(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,7 +68,7 @@ public class LoginDisplay extends JFrame{
         painelCabecalho.setLayout(new BoxLayout(painelCabecalho, BoxLayout.Y_AXIS));
         painelCabecalho.setOpaque(false);
 
-        JLabel titulo = new JLabel("Faça seu Login");
+        JLabel titulo = new JLabel("Faça sua Identificação");
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 38)); // Ampliado para Desktop
         titulo.setForeground(new Color(33, 37, 41));
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -103,7 +103,7 @@ public class LoginDisplay extends JFrame{
         ));
 
         // Campo Senha
-        JLabel lblSenha = new JLabel("Senha:");
+        JLabel lblSenha = new JLabel("E-mail:");
         lblSenha.setFont(fontLabels);
         lblSenha.setForeground(new Color(73, 80, 87));
         JPasswordField textSenha = new JPasswordField();
@@ -144,7 +144,7 @@ public class LoginDisplay extends JFrame{
             if (nome.isEmpty()) {
                 mostrarMensagemModerna("Por favor, insira o nome de usuário.", "Atenção", new Color(255, 193, 7));
             } else if (senha.isEmpty()) {
-                mostrarMensagemModerna("Por favor, insira a sua senha.", "Atenção", new Color(255, 193, 7));
+                mostrarMensagemModerna("Por favor, insira a seu e-mail.", "Atenção", new Color(255, 193, 7));
             } else {
                 mostrarMensagemModerna("Dados validados com sucesso!", "Sucesso", new Color(67, 97, 238));
                 dispose();
